@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Down Syndrome Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            text-align: center;
+        }
+        img {
+            max-width: 300px;
+            margin-top: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Down Syndrome Prediction</h1>
+
+    <input type="file" id="imageInput" accept="image/*"><br><br>
+    <button onclick="predict()">Predict</button>
+
+    <div id="output">
+        <img id="preview" src="" style="display:none;">
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        async function predict() {
+            const fileInput = document.getElementById("imageInput");
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("Please select an image first.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            // Show image preview
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const preview = document.getElementById("preview");
+                preview.src = e.target.result;
+                preview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/predict", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    document.getElementById("result").innerHTML = `
+                        ✅ <strong>Result:</strong> ${data.result}<br>
+                        🔢 <strong>Class Index:</strong> ${data.predicted_class_index}<br>
+                        📊 <strong>Confidence:</strong> ${data.confidence}
+                    `;
+                } else {
+                    document.getElementById("result").innerHTML = `❌ Error: ${data.error}`;
+                }
+
+            } catch (error) {
+                document.getElementById("result").innerHTML = `❌ Error: ${error}`;
+            }
+        }
+    </script>
+
+</body>
+</html>
