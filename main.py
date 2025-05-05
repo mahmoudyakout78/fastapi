@@ -13,7 +13,7 @@ from tensorflow.keras.preprocessing.image import load_img, img_to_array
 # إعداد النموذج
 file_id = "1vwlsHu7rYkN1pi7AUphi4-M6iciVfWaG"  # ID من Google Drive
 model_path = "down_detect_v1.keras"
-download_url = f"https://drive.google.com/uc?id={file_id}"
+download_url = f"https://drive.google.com/uc?export=download&id={file_id}"
 
 # تحميل النموذج من Google Drive إذا لم يكن موجوداً
 if not os.path.exists(model_path):
