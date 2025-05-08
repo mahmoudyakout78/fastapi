@@ -2,5 +2,6 @@ fastapi
 uvicorn
 numpy
 tensorflow
+Pillow
 python-multipart
 gdown
