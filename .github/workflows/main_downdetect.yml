@@ -68,4 +68,4 @@ jobs:
         with:
           app-name: 'downdetect'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_214FE90A38B347F2B23C94A11C4C2C6C }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D75D89B35338413B9B189638B07822C8 }}
